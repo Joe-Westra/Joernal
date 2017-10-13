@@ -1,0 +1,9 @@
+This branches aim is to create a backing up system.
+This will require:
+-learning how to incorporate parameters into scripts
+-reviewing the commands to compress files
+-ideally, the user has some way of dictating where the compressed files should land...
+
+if($1){
+
+
