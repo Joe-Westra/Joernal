@@ -5,29 +5,32 @@ TODAY=$(date +%F)
 JOURNAL_DIR=/media/FILES/journal/
 TODAYS_JOURNAL=${JOURNAL_DIR}${TODAY}.jent
 
-openEntry ()
-{
-#place journal opening code here.  Access parameters passed in by $1, $2, etc.
-echo "hello"
+#Opens journal Entry for date parameter passed in.
+openEntry () {
+    if [[ ! -f "$1" ]]; then
+      echo $(date +%A%B%d%Y) >> $1
+      cat ${JOURNAL_DIR}TEMPLATE.txt >> $1
+    fi
+    nano $1
+    echo "${TODAY}'s entry updated."
 }
+
+
+#check for presence of arguments
+if [[ $# -eq 0 ]]; then
+  openEntry $TODAYS_JOURNAL
+else
+
 
 #getopts looks for single character options ('-y' in the case below)
 #any option with a following colon looks for an argument after the option
 #and stores it in the variable OPT
-while getopts "y:" OPT; do
-  case $OPT in
-  
 
-  *)
-    if [[ ! -f "$TODAYS_JOURNAL" ]]; then
-      echo $(date +%A%B%d%Y) >> $TODAYS_JOURNAL
-      cat ${JOURNAL_DIR}TEMPLATE.jent >> $TODAYS_JOURNAL
-    fi
-    nano $TODAYS_JOURNAL
-    echo "${TODAY}'s entry updated."
+while getopts "ty:" OPT; do
+  case $OPT in
+  t) nano ${JOURNAL_DIR}TEMPLATE.txt
   ;;
   esac
-
 done
-
+fi
 exit
