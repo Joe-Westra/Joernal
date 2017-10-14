@@ -15,6 +15,15 @@ openEntry () {
     echo "${TODAY}'s entry updated."
 }
 
+#Prints help text
+help () {
+  echo "Legal arguments:"
+  echo "-t	Opens TEMPLATE.txt for modification"
+  echo "-h	Display help text"
+  echo "-y	Opens yesterday's journal entry.  Numerical arguments"
+  echo "	following this option will jump backwards that many days."
+}
+
 
 #check for presence of arguments
 if [[ $# -eq 0 ]]; then
@@ -26,9 +35,11 @@ else
 #any option with a following colon looks for an argument after the option
 #and stores it in the variable OPT
 
-while getopts "ty:" OPT; do
+while getopts "thy:" OPT; do
   case $OPT in
   t) nano ${JOURNAL_DIR}TEMPLATE.txt
+  ;;
+  h) help
   ;;
   esac
 done
