@@ -8,7 +8,7 @@ TODAYS_JOURNAL=${JOURNAL_DIR}${TODAY}.jent
 #Opens journal Entry for date parameter passed in.
 openEntry () {
     if [[ ! -f "$1" ]]; then
-      echo $(date +%A%B%d%Y) >> $1
+      echo $(date '+%A %B %d %Y') >> $1
       cat ${JOURNAL_DIR}TEMPLATE.txt >> $1
     fi
     nano $1
@@ -40,6 +40,9 @@ while getopts "thy:" OPT; do
   t) nano ${JOURNAL_DIR}TEMPLATE.txt
   ;;
   h) help
+  ;;
+  y) PREV_DAY=$(date --date=$OPTARG' days ago' +"%F")
+     openEntry ${JOURNAL_DIR}${PREV_DAY}.jent
   ;;
   esac
 done
