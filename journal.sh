@@ -9,18 +9,15 @@ TODAYS_JOURNAL=${JOURNAL_DIR}${TODAY}.jent
 openEntry () {
     if [[ ! -f "$1" ]]; then
       echo $(date '+%A %B %d %Y') >> $1
-  echo "Do you really want to delete today's entry?!?"
-     echo "Yes/No"
-     read
-    cat ${JOURNAL_DIR}TEMPLATE.txt >> $1
+      cat ${JOURNAL_DIR}TEMPLATE.txt >> $1
     fi
-    nano $1
+    gedit $1
     echo "${TODAY}'s entry updated."
 }
 
 deleteEntry () {
   echo "Do you really want to delete today's entry?!?"
-  read -p "yes/no:" answer
+  read -p "yes/no: " answer
   if [[ $answer = 'yes' ]]; then
     rm $TODAYS_JOURNAL
   fi
@@ -28,7 +25,7 @@ deleteEntry () {
 
 #Prints help text
 help () {
-  echo "Legal arguments:"
+  echo "Legal options:"
   echo "-t	Opens TEMPLATE.txt for modification"
   echo "-h	Display help text"
   echo "-y	Opens yesterday's journal entry.  Numerical arguments"
