@@ -1,9 +1,19 @@
-This branches aim is to create a backing up system.
+*****************************
+*Create a backing up system.*
+*****************************
 This will require:
 -learning how to incorporate parameters into scripts
 -reviewing the commands to compress files
 -ideally, the user has some way of dictating where the compressed files should land...
 
-if($1){
 
-
+*******************************************************
+*Allow for template to be filled out from command line*
+*******************************************************
+for each line in TEMPLATE{
+	$prompt = substring(first instance of 0 ":")
+	if($prompt > 1){
+		read -p "${prompt}: " response
+		echo "${prompt}: $response" >> TODAYSJOURNAL.jent
+	}
+}
