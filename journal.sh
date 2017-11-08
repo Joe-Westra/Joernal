@@ -17,10 +17,27 @@ openEntry () {
 
 deleteEntry () {
   echo "Do you really want to delete today's entry?!?"
-  read -p "yes/no: " answer
+  read -p "Type 'yes' to confirm: " answer
   if [[ $answer = 'yes' ]]; then
     rm $TODAYS_JOURNAL
+    echo "today's entry deleted"
+  else
+    echo "Deletion cancelled"
   fi
+}
+
+#Prompts for each individual line in the template, allowing for
+#a more convenient method of entering the ABC's of the day
+interactiveMode () {
+  echo $(date '+%A %B %d %Y') >> $TODAYS_JOURNAL
+  echo
+  while read line; do
+    echo $line
+    read -u 3 input
+    echo "${line} ${input}" >> $TODAYS_JOURNAL
+
+  done 3<&0 < ${JOURNAL_DIR}TEMPLATE.txt
+  #add new lines, open focus writer
 }
 
 #Prints help text
@@ -31,6 +48,7 @@ help () {
   echo "-y	Opens yesterday's journal entry.  Numerical arguments"
   echo "	following this option will jump backwards that many days."
   echo "-d	Deletes todays journal entry after prompting"
+  echo "-i	Interactive mode.  Enter todays stats from the terminal."
 }
 
 
@@ -44,7 +62,7 @@ else
 #any option with a following colon looks for an argument after the option
 #and stores it in the variable OPT
 
-while getopts "thy:d" OPT; do
+while getopts "thy:di" OPT; do
   case $OPT in
   t) nano ${JOURNAL_DIR}TEMPLATE.txt
   ;;
@@ -54,6 +72,8 @@ while getopts "thy:d" OPT; do
      openEntry ${JOURNAL_DIR}${PREV_DAY}.jent
   ;;
   d) deleteEntry
+  ;;
+  i) interactiveMode
   ;;
   esac
 done
