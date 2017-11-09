@@ -29,14 +29,23 @@ deleteEntry () {
 #Prompts for each individual line in the template, allowing for
 #a more convenient method of entering the ABC's of the day
 interactiveMode () {
-  echo $(date '+%A %B %d %Y') >> $TODAYS_JOURNAL
-  echo
-  while read line; do
-    echo $line
-    read -u 3 input
-    echo "${line} ${input}" >> $TODAYS_JOURNAL
 
-  done 3<&0 < ${JOURNAL_DIR}TEMPLATE.txt
+  if [[ ! -f $TODAYS_JOURNAL ]]; then
+    echo $(date '+%A %B %d %Y') >> $TODAYS_JOURNAL
+    echo >> $TODAYS_JOURNAL
+    while read line; do
+      echo $line
+      read -u 3 input
+      echo "${line} ${input}" >> $TODAYS_JOURNAL
+
+    done 3<&0 < ${JOURNAL_DIR}TEMPLATE.txt
+    for counter in {1,2}; do
+      echo "" >> $TODAYS_JOURNAL
+    done
+  else
+    echo "Today's entry already exists"
+  fi
+  openEntry $TODAYS_JOURNAL
   #add new lines, open focus writer
 }
 
