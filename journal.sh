@@ -15,12 +15,13 @@ openEntry () {
     echo "${TODAY}'s entry updated."
 }
 
+
 deleteEntry () {
   echo "Do you really want to delete today's entry?!?"
   read -p "Type 'yes' to confirm: " answer
   if [[ $answer = 'yes' ]]; then
     rm $TODAYS_JOURNAL
-    echo "today's entry deleted"
+    echo "Today's entry deleted"
   else
     echo "Deletion cancelled"
   fi
@@ -45,8 +46,8 @@ interactiveMode () {
   else
     echo "Today's entry already exists"
   fi
+
   openEntry $TODAYS_JOURNAL
-  #add new lines, open focus writer
 }
 
 #Prints help text
@@ -58,8 +59,17 @@ help () {
   echo "	following this option will jump backwards that many days."
   echo "-d	Deletes todays journal entry after prompting"
   echo "-i	Interactive mode.  Enter todays stats from the terminal."
+  echo "-r	Review previous entries"
 }
 
+#Print previous 3 entries out to terminal
+printOlder () {
+  more $(ls -t ${JOURNAL_DIR}20* | head -3)
+}
+
+#************#
+#    MAIN    #
+#************#
 
 #check for presence of arguments
 if [[ $# -eq 0 ]]; then
@@ -71,7 +81,7 @@ else
 #any option with a following colon looks for an argument after the option
 #and stores it in the variable OPT
 
-while getopts "thy:di" OPT; do
+while getopts "thy:dir" OPT; do
   case $OPT in
   t) nano ${JOURNAL_DIR}TEMPLATE.txt
   ;;
@@ -83,6 +93,8 @@ while getopts "thy:di" OPT; do
   d) deleteEntry
   ;;
   i) interactiveMode
+  ;;
+  r) printOlder
   ;;
   esac
 done
