@@ -11,6 +11,8 @@ openEntry () {
       echo $(date '+%A %B %d %Y') >> $1
       cat ${JOURNAL_DIR}TEMPLATE.txt >> $1
     fi
+
+    echo >> $1; echo >> $1; echo $(date +%R) >> $1
     focuswriter $1
     echo "${TODAY}'s entry updated."
 }

@@ -16,8 +16,14 @@ This will require:
 	-allow for a random journal recital?
 
 
-
 Accomplished:
+
+
+Dec 13th 2017
+*********************************************
+*Add timestamp to entry whenever it's opened*
+*********************************************
+
 
 *******************************************************
 *Allow for template to be filled out from command line*
