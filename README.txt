@@ -1,10 +1,8 @@
 TODO:
--Refactor openEntry() to parse a date, not a file name.
 
--Add interactive mode by using "read" commands
+****currently halfway to implementing interactive mode as main mode.  To do so, the openEntry() and interactiveMode() needs to parse a date, not a file name.***
 
--Add optionality for importing new templates (ie. a running to do list)
-
+-Add optionality for importing new templates or synbcing up with other apps (ie. a running to do list)
 
 This branches aim is to create a backing up system.
 This will require:

@@ -6,6 +6,12 @@ JOURNAL_DIR=/media/FILES/journal/
 TODAYS_JOURNAL=${JOURNAL_DIR}${TODAY}.jent
 
 #Opens journal Entry for date parameter passed in.
+
+
+####BUGGY CODE!!!  Opening yesterdays journal prints todays date
+####at the top of the entry.
+
+
 openEntry () {
     if [[ ! -f "$1" ]]; then
       echo $(date '+%A %B %d %Y') >> $1
@@ -45,8 +51,6 @@ interactiveMode () {
     for counter in {1,2}; do
       echo "" >> $TODAYS_JOURNAL
     done
-  else
-    echo "Today's entry already exists"
   fi
 
   openEntry $TODAYS_JOURNAL
@@ -61,7 +65,7 @@ help () {
   echo "	following this option will jump backwards that many days."
   echo "-d	Deletes todays journal entry after prompting"
   echo "-i	Interactive mode.  Enter todays stats from the terminal."
-  echo "-r	Review previous entries"
+  echo "-r	Read a few recent entries"
 }
 
 #Print previous 3 entries out to terminal
@@ -75,7 +79,8 @@ printOlder () {
 
 #check for presence of arguments
 if [[ $# -eq 0 ]]; then
-  openEntry $TODAYS_JOURNAL
+#  openEntry $TODAYS_JOURNAL
+   interactiveMode
 else
 
 
@@ -89,8 +94,10 @@ while getopts "thy:dir" OPT; do
   ;;
   h) help
   ;;
-  y) PREV_DAY=$(date --date=$OPTARG' days ago' +"%F")
-     openEntry ${JOURNAL_DIR}${PREV_DAY}.jent
+  y)PREV_DAY=$(date --date=$OPTARG' days ago' +"%F")
+    TODAYS_JOURNAL="${JOURNAL_DIR}${PREV_DAY}.jent"
+    interactiveMode
+
   ;;
   d) deleteEntry
   ;;

@@ -28,3 +28,4 @@ Dec 13th 2017
 *******************************************************
 *Allow for template to be filled out from command line*
 *******************************************************
+-Made this the default behaviour 
